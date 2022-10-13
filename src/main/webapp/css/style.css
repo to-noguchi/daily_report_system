@@ -90,6 +90,10 @@ tr.row0 {
         background-color: #ffffff;
 }
 
+select {
+    height: 30px;
+}
+
 #flush_success {
     width: 100%;
     padding-top: 28px;
@@ -100,8 +104,14 @@ tr.row0 {
     background-color: #d4edda;
 }
 
-select {
-    height: 30px;
+#flush_error {
+    width: 100%;
+    padding-top: 28px;
+    padding-left: 2%;
+    padding-bottom: 28px;
+    margin-bottom: 15px;
+    color: #721c24;
+    background-color: #f8d7da;
 }
 
 table#report_list th {
