@@ -41,6 +41,20 @@ public enum AttributeConst {
     DEL_FLAG_TRUE(1),
     DEL_FLAG_FALSE(0),
 
+//★ここから追記
+    //フォロー管理
+    EMPFOL("enployee_follow"),
+    EMPFOLS("employee_follows"),
+    EMPFOL_COUNT("employee_follows_count"),
+    EMPFOL_ID("id"),
+    EMPFOL_EMPID("employee_id"),
+    EMPFOL_FOL_FLG("emloyee_follow_flag"),
+
+    //フォローフラグ
+    FOL_FLAG_TRUE(1),
+    FOL_FLAG_FALSE(0),
+//★ここまで追記
+
     //日報管理
     REPORT("report"),
     REPORTS("reports"),

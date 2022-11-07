@@ -1,8 +1,8 @@
+//★追加クラス
+
 package models;
 //DTO
 //テーブル名やカラム名をJpaConstクラスの定数で定義している
-
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,50 +44,21 @@ public class Employee_Follow {
      * id
      */
     @Id
-    @Column(name = JpaConst.EMP_COL_ID)
+    @Column(name = JpaConst.EMPFOL_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 社員番号
+     * フォローする従業員のid
      */
-    @Column(name = JpaConst.EMP_COL_CODE, nullable = false, unique = true)
-    private String code;
+    @Column(name = JpaConst.EMPFOL_COL_EMP, nullable = false)
+    private String employee_id;
 
     /**
-     * 氏名
+     * フォロー先の従業員のid
      */
-    @Column(name = JpaConst.EMP_COL_NAME, nullable = false)
-    private String name;
+    @Column(name = JpaConst.EMPFOL_COL_FOL, nullable = false)
+    private String follower_id;
 
-    /**
-     * パスワード
-     */
-    @Column(name = JpaConst.EMP_COL_PASS, length = 64, nullable = false)
-    private String password;
-
-    /**
-     * 管理者権限があるかどうか（一般：0、管理者：1）
-     */
-    @Column(name = JpaConst.EMP_COL_ADMIN_FLAG, nullable = false)
-    private Integer adminFlag;
-
-    /**
-     *登録日時
-     */
-    @Column(name = JpaConst.EMP_COL_CREATED_AT, nullable = false)
-    private LocalDateTime createdAt;
-
-    /**
-     * 更新日時
-     */
-    @Column(name = JpaConst.EMP_COL_UPDATED_AT, nullable = false)
-    private LocalDateTime updatedAt;
-
-    /**
-     * 削除された従業員かどうか（現役：0、削除済み：1）
-     */
-    @Column(name = JpaConst.EMP_COL_DELETE_FLAG, nullable = false)
-    private Integer deleteFlag;
 
 }
