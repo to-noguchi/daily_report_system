@@ -47,7 +47,6 @@ public interface JpaConst {
     String EMPFOL_COL_ID = "id"; //id
     String EMPFOL_COL_EMP = "employee_id"; //フォローする従業員のid
     String EMPFOL_COL_FOL = "follower_id"; //フォロー先の従業員のid
-    String EMPFOL_COL_FOL_FLAG = "follow_flag"; //フォローフラグ
 //★ここまで追記
 
     //Entity名
@@ -59,6 +58,7 @@ public interface JpaConst {
     String JPQL_PARM_CODE = "code"; //社員番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
+    String JPQL_PARM_FOLLOWER = "follower"; //フォロー先　★追記
 
     //NamedQueryの nameとquery
     //全ての従業員をidの降順に取得する

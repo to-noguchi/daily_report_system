@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * フォローしている従業員データのDTOモデル
+ * フォローに関わる従業員データのDTOモデル
  *
  */
 @Table(name = JpaConst.TABLE_EMPFOL)
@@ -49,7 +51,15 @@ public class Employee_Follow {
     private Integer id;
 
     /**
-     * フォローする従業員のid
+     * フォローする側の従業員とフォロー先の従業員の関係
+     * DTOであるmodels/Employeeクラスと、JpaConstのEMPFOL_COL_EMP(employee_id)を関連付け
+     */
+    @ManyToOne
+    @JoinColumn(name = JpaConst.EMPFOL_COL_EMP, nullable = false)
+    private Employee employee;
+
+    /**
+     * フォローする側の従業員のid
      */
     @Column(name = JpaConst.EMPFOL_COL_EMP, nullable = false)
     private String employee_id;

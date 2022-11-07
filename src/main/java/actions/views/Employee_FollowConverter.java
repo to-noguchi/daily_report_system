@@ -1,5 +1,3 @@
-//★追加クラス
-
 package actions.views;
 
 import java.util.ArrayList;
@@ -8,37 +6,39 @@ import java.util.List;
 import models.Employee_Follow;
 
 /**
- * フォローしている従業員データのDTOモデル⇔Viewモデルの変換を行うクラス
+ * フォロー関係のDTOモデル⇔Viewモデルの変換を行うクラス
  *
  */
 public class Employee_FollowConverter {
 
     /**
      * ViewモデルのインスタンスからDTOモデルのインスタンスを作成する
-     * @param efv EmployeeViewのインスタンス
+     * @param efv Employee_FollowViewのインスタンス
      * @return Employee_Followのインスタンス
      */
     public static Employee_Follow toModel(Employee_FollowView efv) {
-
         return new Employee_Follow(
                 efv.getId(),
-                efv.getFollower_name(),
-                efv.getFollower_report());
+                Employee_FollowConverter.toModel(efv.getEmployee()),
+                efv.getEmployee_id(),
+                efv.getFollower_id());
+
     }
 
     /**
      * DTOモデルのインスタンスからViewモデルのインスタンスを作成する
      * @param ef Employee_Followのインスタンス
-     * @return EmployeeViewのインスタンス
+     * @return Employee_FollowViewのインスタンス
      */
     public static Employee_FollowView toView(Employee_Follow ef) {
 
-        if(ef == null) {
+        if (ef == null) {
             return null;
         }
 
         return new Employee_FollowView(
                 ef.getId(),
+                Employee_FollowConverter.toView(ef.getEmployee()),
                 ef.getEmployee_id(),
                 ef.getFollower_id());
     }
@@ -60,13 +60,14 @@ public class Employee_FollowConverter {
 
     /**
      * Viewモデルの全フィールドの内容をDTOモデルのフィールドにコピーする
-     * @param e DTOモデル(コピー先)
-     * @param ev Viewモデル(コピー元)
+     * @param ef DTOモデル(コピー先)
+     * @param efv Viewモデル(コピー元)
      */
     public static void copyViewToModel(Employee_Follow ef, Employee_FollowView efv) {
         ef.setId(efv.getId());
-        ef.setEmployee_id(efv.getFollower_name());
-        ef.setFollower_id(efv.getFollower_report());
+        ef.setEmployee(EmployeeConverter.toModel(efv.getEmployee()));
+        ef.setEmployee_id(efv.getEmployee_id());
+        ef.setFollower_id(efv.getFollower_id());
 
     }
 

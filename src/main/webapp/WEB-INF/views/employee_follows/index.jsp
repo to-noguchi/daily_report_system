@@ -5,7 +5,6 @@
 
 <c:set var="actRep" value="${ForwardConst.ACT_EMPFOL.getValue()}" />
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
-<c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -14,29 +13,26 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>フォロー中のユーザー　一覧</h2>
+        <h2>フォロー中の従業員　一覧</h2>
         <table id="report_list">
             <tbody>
                 <tr>
-                    <th class="report_name">氏名</th>
-                    <th class="report_action">操作</th>
+                    <th class="employee_follow_name">氏名</th>
+                    <th class="employee_follow_action">操作</th>
                 </tr>
-                <c:forEach var="report" items="${reports}" varStatus="status">
-                    <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
+                <c:forEach var="employee_follow" items="${employee_follows}" varStatus="status">
 
                     <tr class="row${status.count % 2}">
-                        <td class="report_name"><c:out value="${report.employee.name}" /></td>
-                        <td class="report_date"><fmt:formatDate value='${reportDay}' pattern='yyyy-MM-dd' /></td>
-                        <td class="report_title">${report.title}</td>
-                        <td class="report_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${report.id}' />">詳細を見る</a></td>
+                        <td class="employee_follow_name"><c:out value="${report.employee.name}" /></td>
+                        <td class="employee_follow_action"><a href="<c:url value='?action=${actRep}&command=${commShow}&id=${employee_follow.id}' />">日報一覧を見る</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
 
         <div id="pagination">
-            （全 ${reports_count} 件）<br />
-            <c:forEach var="i" begin="1" end="${((reports_count - 1) / maxRow) + 1}" step="1">
+            （全 ${employee_follows_count} 件）<br />
+            <c:forEach var="i" begin="1" end="${((employee_follows_count - 1) / maxRow) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
                         <c:out value="${i}" />&nbsp;

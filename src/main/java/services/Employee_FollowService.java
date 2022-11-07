@@ -2,18 +2,13 @@
 
 package services;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import actions.views.EmployeeConverter;
 import actions.views.Employee_FollowConverter;
 import actions.views.Employee_FollowView;
-import actions.views.ReportConverter;
-import actions.views.ReportView;
 import constants.JpaConst;
 import models.Employee_Follow;
-import models.Report;
-import models.validators.ReportValidator;
 
 /**
  * フォローテーブルの操作に関わる処理を行うクラス
@@ -21,15 +16,15 @@ import models.validators.ReportValidator;
 public class Employee_FollowService extends ServiceBase {
 
     /**
-     * フォローしている従業員の氏名を、指定されたページ数の一覧画面に表示する分取得しEmployee_FollowViewのリストで返却する
+     * フォローしている従業員データを、指定されたページ数の一覧画面に表示する分取得しEmployee_FollowViewのリストで返却する
      * @param employee 従業員
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<Employee_FollowView> getMinePerPage(Employee_FollowView employee_id, int page) {
+    public List<Employee_FollowView> getMinePerPage(Employee_FollowView employee, int page) {
 
         List<Employee_Follow> employee_follows = em.createNamedQuery(JpaConst.Q_EMPFOL_GET_ALL, Employee_Follow.class)
-                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, EmployeeConverter.toModel(employee))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
@@ -41,37 +36,37 @@ public class Employee_FollowService extends ServiceBase {
      * @param employee_follow
      * @return フォローしている従業員データの件数
      */
-    public long countAllMine(Employee_FollowView employee_follow) {
+    public long countAllMine(Employee_FollowView employee) {
 
-        long count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT_ALL_MINE, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_EMPLOYEE, EmployeeConverter.toModel(employee))
+        long count = (long) em.createNamedQuery(JpaConst.Q_EMPFOL_COUNT, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, EmployeeConverter.toModel(employee))
                 .getSingleResult();
 
         return count;
     }
 
     /**
-     * 指定されたページ数の一覧画面に表示する日報データを取得し、ReportViewのリストで返却する
+     * 指定されたページ数の一覧画面に表示するフォロー先従業員データを取得し、Employee_FollowViewのリストで返却する
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<ReportView> getAllPerPage(int page) {
+    public List<Employee_FollowView> getAllPerPage(int page) {
 
-        List<Report> reports = em.createNamedQuery(JpaConst.Q_REP_GET_ALL, Report.class)
+        List<Employee_Follow> employee_follows = em.createNamedQuery(JpaConst.Q_EMPFOL_GET_ALL, Employee_Follow.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return ReportConverter.toViewList(reports);
+        return Employee_FollowConverter.toViewList(employee_follows);
     }
 
     /**
-     * 日報テーブルのデータの件数を取得し、返却する
+     * フォローテーブルのデータの件数を取得し、返却する
      * @return データの件数
      */
     public long countAll() {
-        long reports_count = (long) em.createNamedQuery(JpaConst.Q_REP_COUNT, Long.class)
+        long employee_follows_count = (long) em.createNamedQuery(JpaConst.Q_EMPFOL_COUNT, Long.class)
                 .getSingleResult();
-        return reports_count;
+        return employee_follows_count;
     }
 
     /**
@@ -79,49 +74,8 @@ public class Employee_FollowService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    public ReportView findOne(int id) {
-        return ReportConverter.toView(findOneInternal(id));
-    }
-
-    /**
-     * 画面から入力された日報の登録内容を元にデータを1件作成し、日報テーブルに登録する
-     * @param rv 日報の登録内容
-     * @return バリデーションで発生したエラーのリスト
-     */
-    public List<String> create(ReportView rv) {
-        List<String> errors = ReportValidator.validate(rv);
-        if (errors.size() == 0) {
-            LocalDateTime ldt = LocalDateTime.now();
-            rv.setCreatedAt(ldt);
-            rv.setUpdatedAt(ldt);
-            createInternal(rv);
-        }
-
-        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
-        return errors;
-    }
-
-    /**
-     * 画面から入力された日報の登録内容を元に、日報データを更新する
-     * @param rv 日報の更新内容
-     * @return バリデーションで発生したエラーのリスト
-     */
-    public List<String> update(ReportView rv) {
-
-        //バリデーションを行う
-        List<String> errors = ReportValidator.validate(rv);
-
-        if (errors.size() == 0) {
-
-            //更新日時を現在時刻に設定
-            LocalDateTime ldt = LocalDateTime.now();
-            rv.setUpdatedAt(ldt);
-
-            updateInternal(rv);
-        }
-
-        //バリデーションで発生したエラーを返却（エラーがなければ0件の空リスト）
-        return errors;
+    public Employee_FollowView findOne(int id) {
+        return Employee_FollowConverter.toView(findOneInternal(id));
     }
 
     /**
@@ -129,31 +83,31 @@ public class Employee_FollowService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    private Report findOneInternal(int id) {
-        return em.find(Report.class, id);
+    private Employee_Follow findOneInternal(int id) {
+        return em.find(Employee_Follow.class, id);
     }
 
     /**
-     * 日報データを1件登録する
-     * @param rv 日報データ
+     * フォロー先従業員を1件登録する
+     * @param efv フォロー先従業員データ
      */
-    private void createInternal(ReportView rv) {
+    private void createInternal(Employee_FollowView efv) {
 
         em.getTransaction().begin();
-        em.persist(ReportConverter.toModel(rv));
+        em.persist(Employee_FollowConverter.toModel(efv));
         em.getTransaction().commit();
 
     }
 
     /**
-     * 日報データを更新する
-     * @param rv 日報データ
+     * フォロー先従業員を更新する
+     * @param efv フォロー先従業員データ
      */
-    private void updateInternal(ReportView rv) {
+    private void updateInternal(Employee_FollowView efv) {
 
         em.getTransaction().begin();
-        Report r = findOneInternal(rv.getId());
-        ReportConverter.copyViewToModel(r, rv);
+        Employee_Follow ef = findOneInternal(efv.getId());
+        Employee_FollowConverter.copyViewToModel(ef, efv);
         em.getTransaction().commit();
 
     }

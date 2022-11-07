@@ -23,13 +23,18 @@ public class Employee_FollowView {
     private Integer id;
 
     /**
-     * フォローしている従業員の氏名
+     * フォローする側の従業員Viewとの関連付け
      */
-    private Employee_FollowView follower_name;
+    private EmployeeView employee;
 
     /**
-     * フォローしている従業員の日報一覧へのリンク
+     * フォローする側の従業員のid
      */
-    private Employee_FollowView follower_report;
+    private Employee_FollowView employee_id;
+
+    /**
+     * フォロー先の従業員のid
+     */
+    private Employee_FollowView follower_id;
 
 }
