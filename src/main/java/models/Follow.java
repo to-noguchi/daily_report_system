@@ -4,6 +4,8 @@ package models;
 //DTO
 //テーブル名やカラム名をJpaConstクラスの定数で定義している
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,14 +27,14 @@ import lombok.Setter;
  * フォローに関わる従業員データのDTOモデル
  *
  */
-@Table(name = JpaConst.TABLE_EMPFOL)
+@Table(name = JpaConst.TABLE_FOL)
 @NamedQueries({
     @NamedQuery(
-            name = JpaConst.Q_EMPFOL_GET_ALL,
-            query = JpaConst.Q_EMPFOL_GET_ALL_DEF),
+            name = JpaConst.Q_FOL_GET_ALL,
+            query = JpaConst.Q_FOL_GET_ALL_DEF),
     @NamedQuery(
-            name = JpaConst.Q_EMPFOL_COUNT,
-            query = JpaConst.Q_EMPFOL_COUNT_DEF),
+            name = JpaConst.Q_FOL_COUNT,
+            query = JpaConst.Q_FOL_COUNT_DEF),
 })
 
 @Getter //全てのクラスフィールドについてgetterを自動生成する(Lombok)
@@ -40,35 +42,41 @@ import lombok.Setter;
 @NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
 @AllArgsConstructor //全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
 @Entity
-public class Employee_Follow {
+public class Follow {
 
     /**
      * id
      */
     @Id
-    @Column(name = JpaConst.EMPFOL_COL_ID)
+    @Column(name = JpaConst.FOL_COL_ID)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * フォローする側の従業員とフォロー先の従業員の関係
-     * DTOであるmodels/Employeeクラスと、JpaConstのEMPFOL_COL_EMP(employee_id)を関連付け
+     * 作成者の情報。ログインしている従業員の情報をオブジェクトのまま employee フィールドに格納
      */
+
     @ManyToOne
-    @JoinColumn(name = JpaConst.EMPFOL_COL_EMP, nullable = false)
+    @JoinColumn(name = JpaConst.FOL_COL_WER, nullable = false)
     private Employee employee;
+
 
     /**
      * フォローする側の従業員のid
      */
-    @Column(name = JpaConst.EMPFOL_COL_EMP, nullable = false)
-    private String employee_id;
+    @Column(name = JpaConst.FOL_COL_WER, nullable = false)
+    private String follower_id;
 
     /**
      * フォロー先の従業員のid
      */
-    @Column(name = JpaConst.EMPFOL_COL_FOL, nullable = false)
-    private String follower_id;
+    @Column(name = JpaConst.FOL_COL_WEE, nullable = false)
+    private String followee_id;
 
+    /**
+     * 登録日時
+     */
+    @Column(name = JpaConst.FOL_COL_CREATED_AT, nullable = false)
+    private LocalDateTime createdAt;
 
 }

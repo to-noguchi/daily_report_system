@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter //全てのクラスフィールドについてsetterを自動生成する(Lombok)
 @NoArgsConstructor //引数なしコンストラクタを自動生成する(Lombok)
 @AllArgsConstructor //全てのクラスフィールドを引数にもつ引数ありコンストラクタを自動生成する(Lombok)
-public class Employee_FollowView {
+public class FollowView {
 
     /**
      * id
@@ -30,11 +30,11 @@ public class Employee_FollowView {
     /**
      * フォローする側の従業員のid
      */
-    private Employee_FollowView employee_id;
+    private FollowView follower_id;
 
     /**
      * フォロー先の従業員のid
      */
-    private Employee_FollowView follower_id;
+    private FollowView followee_id;
 
 }

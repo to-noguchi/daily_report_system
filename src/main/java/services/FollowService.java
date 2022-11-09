@@ -5,15 +5,15 @@ package services;
 import java.util.List;
 
 import actions.views.EmployeeConverter;
-import actions.views.Employee_FollowConverter;
-import actions.views.Employee_FollowView;
+import actions.views.FollowConverter;
+import actions.views.FollowView;
 import constants.JpaConst;
-import models.Employee_Follow;
+import models.Follow;
 
 /**
  * フォローテーブルの操作に関わる処理を行うクラス
  */
-public class Employee_FollowService extends ServiceBase {
+public class FollowService extends ServiceBase {
 
     /**
      * フォローしている従業員データを、指定されたページ数の一覧画面に表示する分取得しEmployee_FollowViewのリストで返却する
@@ -21,14 +21,14 @@ public class Employee_FollowService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<Employee_FollowView> getMinePerPage(Employee_FollowView employee, int page) {
+    public List<FollowView> getMinePerPage(FollowView employee, int page) {
 
-        List<Employee_Follow> employee_follows = em.createNamedQuery(JpaConst.Q_EMPFOL_GET_ALL, Employee_Follow.class)
-                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, EmployeeConverter.toModel(employee))
+        List<Follow> follows = em.createNamedQuery(JpaConst.Q_FOL_GET_ALL, Follow.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(employee))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return Employee_FollowConverter.toViewList(employee_follows);
+        return FollowConverter.toViewList(follows);
     }
 
     /**
@@ -36,10 +36,10 @@ public class Employee_FollowService extends ServiceBase {
      * @param employee_follow
      * @return フォローしている従業員データの件数
      */
-    public long countAllMine(Employee_FollowView employee) {
+    public long countAllMine(FollowView employee) {
 
-        long count = (long) em.createNamedQuery(JpaConst.Q_EMPFOL_COUNT, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, EmployeeConverter.toModel(employee))
+        long count = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(employee))
                 .getSingleResult();
 
         return count;
@@ -50,13 +50,13 @@ public class Employee_FollowService extends ServiceBase {
      * @param page ページ数
      * @return 一覧画面に表示するデータのリスト
      */
-    public List<Employee_FollowView> getAllPerPage(int page) {
+    public List<FollowView> getAllPerPage(int page) {
 
-        List<Employee_Follow> employee_follows = em.createNamedQuery(JpaConst.Q_EMPFOL_GET_ALL, Employee_Follow.class)
+        List<Follow> follows = em.createNamedQuery(JpaConst.Q_FOL_GET_ALL, Follow.class)
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
-        return Employee_FollowConverter.toViewList(employee_follows);
+        return FollowConverter.toViewList(follows);
     }
 
     /**
@@ -64,9 +64,9 @@ public class Employee_FollowService extends ServiceBase {
      * @return データの件数
      */
     public long countAll() {
-        long employee_follows_count = (long) em.createNamedQuery(JpaConst.Q_EMPFOL_COUNT, Long.class)
+        long follows_count = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT, Long.class)
                 .getSingleResult();
-        return employee_follows_count;
+        return follows_count;
     }
 
     /**
@@ -74,8 +74,8 @@ public class Employee_FollowService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    public Employee_FollowView findOne(int id) {
-        return Employee_FollowConverter.toView(findOneInternal(id));
+    public FollowView findOne(int id) {
+        return FollowConverter.toView(findOneInternal(id));
     }
 
     /**
@@ -83,18 +83,18 @@ public class Employee_FollowService extends ServiceBase {
      * @param id
      * @return 取得データのインスタンス
      */
-    private Employee_Follow findOneInternal(int id) {
-        return em.find(Employee_Follow.class, id);
+    private Follow findOneInternal(int id) {
+        return em.find(Follow.class, id);
     }
 
     /**
      * フォロー先従業員を1件登録する
      * @param efv フォロー先従業員データ
      */
-    private void createInternal(Employee_FollowView efv) {
+    private void createInternal(FollowView fv) {
 
         em.getTransaction().begin();
-        em.persist(Employee_FollowConverter.toModel(efv));
+        em.persist(FollowConverter.toModel(fv));
         em.getTransaction().commit();
 
     }
@@ -103,11 +103,11 @@ public class Employee_FollowService extends ServiceBase {
      * フォロー先従業員を更新する
      * @param efv フォロー先従業員データ
      */
-    private void updateInternal(Employee_FollowView efv) {
+    private void updateInternal(FollowView fv) {
 
         em.getTransaction().begin();
-        Employee_Follow ef = findOneInternal(efv.getId());
-        Employee_FollowConverter.copyViewToModel(ef, efv);
+        Follow f = findOneInternal(fv.getId());
+        FollowConverter.copyViewToModel(f, fv);
         em.getTransaction().commit();
 
     }
