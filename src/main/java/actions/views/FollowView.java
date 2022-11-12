@@ -2,10 +2,13 @@
 
 package actions.views;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 /**
  * フォローについて画面の入力値・出力値を扱うViewモデル
@@ -23,18 +26,18 @@ public class FollowView {
     private Integer id;
 
     /**
-     * フォローする側の従業員Viewとの関連付け
-     */
-    private EmployeeView employee;
-
-    /**
      * フォローする側の従業員のid
      */
-    private FollowView follower_id;
+    private EmployeeView followerId;
 
     /**
      * フォロー先の従業員のid
      */
-    private FollowView followee_id;
+    private EmployeeView followeeId;
+
+    /**
+     * フォローした日時
+     */
+    private LocalDateTime createdAt;
 
 }

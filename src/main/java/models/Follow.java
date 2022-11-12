@@ -53,25 +53,18 @@ public class Follow {
     private Integer id;
 
     /**
-     * 作成者の情報。ログインしている従業員の情報をオブジェクトのまま employee フィールドに格納
-     */
-
-    @ManyToOne
-    @JoinColumn(name = JpaConst.FOL_COL_WER, nullable = false)
-    private Employee employee;
-
-
-    /**
      * フォローする側の従業員のid
      */
-    @Column(name = JpaConst.FOL_COL_WER, nullable = false)
-    private String follower_id;
+    @ManyToOne
+    @JoinColumn(name = JpaConst.FOL_COL_WER, nullable = false)
+    private Employee followerId;
 
     /**
      * フォロー先の従業員のid
      */
-    @Column(name = JpaConst.FOL_COL_WEE, nullable = false)
-    private String followee_id;
+    @ManyToOne
+    @JoinColumn(name = JpaConst.FOL_COL_WEE, nullable = false)
+    private Employee followeeId;
 
     /**
      * 登録日時
