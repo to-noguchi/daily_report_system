@@ -50,6 +50,8 @@ public enum AttributeConst {
     EMPFOL_EMPID("employee_id"),
     EMPFOL_FOLID("follower_id"),
     EMPFOL_FOL_FLG("emloyee_follow_flag"),
+
+    PERSONAL("personal"), //個人の日報一覧用
 //★ここまで追記
 
     //日報管理
