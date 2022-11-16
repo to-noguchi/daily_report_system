@@ -5,13 +5,11 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
-import actions.views.EmployeeView;
+import actions.views.FollowView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
-import constants.MessageConst;
-import constants.PropertyConst;
-import services.EmployeeService;
+import services.FollowService;
 
 /**
  * フォローに関わる処理を行うActionクラス
@@ -19,7 +17,7 @@ import services.EmployeeService;
  */
 public class FollowAction extends ActionBase {
 
-    private EmployeeService service;
+    private FollowService service;
 
     /**
      * メソッドを実行する
@@ -27,7 +25,7 @@ public class FollowAction extends ActionBase {
     @Override
     public void process() throws ServletException, IOException {
 
-        service = new EmployeeService();
+        service = new FollowService();
 
         //メソッドを実行
         invoke();
@@ -42,18 +40,18 @@ public class FollowAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        //管理者かどうかのチェック //追記
-        if (checkAdmin()) { //追記
+        /*管理者かどうかのチェック
+        if (checkAdmin()) { */
 
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
-            List<EmployeeView> employees = service.getPerPage(page);
+            List<FollowView> follows = service.getPerPage(page);
 
             //全ての従業員データの件数を取得
-            long employeeCount = service.countAll();
+            long followCount = service.countAll();
 
-            putRequestScope(AttributeConst.EMPLOYEES, employees); //取得した従業員データ
-            putRequestScope(AttributeConst.EMP_COUNT, employeeCount); //全ての従業員データの件数
+            putRequestScope(AttributeConst.FOLS, follows); //取得した従業員データ
+            putRequestScope(AttributeConst.FOL_COUNT, followCount); //全ての従業員データの件数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
             putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
@@ -65,17 +63,17 @@ public class FollowAction extends ActionBase {
             }
 
             //一覧画面を表示
-            forward(ForwardConst.FW_EMP_INDEX);
+            forward(ForwardConst.FW_FOL_INDEX);
 
         } //追記
 
     }
-
+    /*
     /**
      * 新規登録画面を表示する
      * @throws ServletException
      * @throws IOException
-     */
+
     public void entryNew() throws ServletException, IOException {
 
         //管理者かどうかのチェック //追記
@@ -92,7 +90,7 @@ public class FollowAction extends ActionBase {
      * 新規登録を行う
      * @throws ServletException
      * @throws IOException
-     */
+
     public void create() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
@@ -142,7 +140,7 @@ public class FollowAction extends ActionBase {
      * 詳細画面を表示する
      * @throws ServletException
      * @throws IOException
-     */
+
     public void show() throws ServletException, IOException {
 
         //管理者かどうかのチェック //追記
@@ -170,7 +168,7 @@ public class FollowAction extends ActionBase {
      * 編集画面を表示する
      * @throws ServletException
      * @throws IOException
-     */
+
     public void edit() throws ServletException, IOException {
 
         //管理者かどうかのチェック //追記
@@ -199,7 +197,7 @@ public class FollowAction extends ActionBase {
      * 更新を行う
      * @throws ServletException
      * @throws IOException
-     */
+
     public void update() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
@@ -246,7 +244,7 @@ public class FollowAction extends ActionBase {
      * 論理削除を行う
      * @throws ServletException
      * @throws IOException
-     */
+
     public void destroy() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
@@ -268,7 +266,7 @@ public class FollowAction extends ActionBase {
      * true: 管理者 false: 管理者ではない
      * @throws ServletException
      * @throws IOException
-     */
+
     private boolean checkAdmin() throws ServletException, IOException {
 
         //セッションからログイン中の従業員情報を取得
@@ -287,4 +285,4 @@ public class FollowAction extends ActionBase {
 
     }
 
-}
+}*/

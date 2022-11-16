@@ -43,13 +43,12 @@ public enum AttributeConst {
 
 //★ここから追記
     //フォロー管理
-    EMPFOL("employee_follow"),
-    EMPFOLS("employee_follows"),
-    EMPFOL_COUNT("employee_follows_count"),
-    EMPFOL_ID("id"),
-    EMPFOL_EMPID("employee_id"),
-    EMPFOL_FOLID("follower_id"),
-    EMPFOL_FOL_FLG("emloyee_follow_flag"),
+    FOL("follow"),
+    FOLS("follows"),
+    FOL_COUNT("follows_count"),
+    FOL_ID("id"),
+    FOL_WER_ID("follower_id"),
+    FOL_WEE_ID("followee_id"),
 
     PERSONAL("personal"), //個人の日報一覧用
 //★ここまで追記
