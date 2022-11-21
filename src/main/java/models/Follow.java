@@ -57,14 +57,14 @@ public class Follow {
      */
     @ManyToOne
     @JoinColumn(name = JpaConst.FOL_COL_WER, nullable = false)
-    private Employee followerId;
+    private Employee follower;
 
     /**
      * フォロー先の従業員のid
      */
     @ManyToOne
     @JoinColumn(name = JpaConst.FOL_COL_WEE, nullable = false)
-    private Employee followeeId;
+    private Employee followee;
 
     /**
      * 登録日時

@@ -28,12 +28,12 @@ public class FollowView {
     /**
      * フォローする側の従業員のid
      */
-    private EmployeeView followerId;
+    private EmployeeView follower;
 
     /**
      * フォロー先の従業員のid
      */
-    private EmployeeView followeeId;
+    private EmployeeView followee;
 
     /**
      * フォローした日時

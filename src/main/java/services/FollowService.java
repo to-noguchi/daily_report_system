@@ -28,11 +28,12 @@ public class FollowService extends ServiceBase {
     }
 
     /**
-     * フォローテーブルのデータの件数を取得し、返却する
+     * 指定した従業員がフォローしているフォロイーデータの件数を取得し、返却する
      * @return フォローテーブルのデータの件数
      */
-    public long countAll() {
-        long folCount = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT, Long.class)
+    public long countAllMine(FollowView follow) {
+        long folCount = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT_ALL_MINE, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, FollowConverter.toModel(follow))
                 .getSingleResult();
 
         return folCount;

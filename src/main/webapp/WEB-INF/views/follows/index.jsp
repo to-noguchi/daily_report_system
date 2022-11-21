@@ -25,14 +25,14 @@
                 </tr>
                 <c:forEach var="follow" items="${follows}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <td><c:out value="${follow.name}" /></td>
+                        <td><c:out value="${follow.employee.name}" /></td>
                         <td>
                             <c:choose>
                                 <c:when test="${employee.deleteFlag == AttributeConst.DEL_FLAG_TRUE.getIntegerValue()}">
                                     （削除済み）
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value='?action=${actFol}&command=${commShow}&id=${follow.id}' />">日報一覧を見る</a>
+                                    <a href="<c:url value='?action=${actFol}&command=${commIdx}&id=${follow.id}' />">日報一覧を見る</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>

@@ -43,15 +43,18 @@ public class FollowAction extends ActionBase {
         /*管理者かどうかのチェック
         if (checkAdmin()) { */
 
+            //セッションからログイン中の従業員情報を取得
+            FollowView loginEmployee = (FollowView)getSessionScope(AttributeConst.LOGIN_EMP);
+
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
-            List<FollowView> follows = service.getPerPage(page);
+            List<FollowView> followee = service.getPerPage(page);
 
-            //全ての従業員データの件数を取得
-            long followCount = service.countAll();
+            //ログイン中の従業員のフォロイーデータの件数を取得
+            long myFollowsCount = service.countAllMine(loginEmployee);
 
-            putRequestScope(AttributeConst.FOLS, follows); //取得した従業員データ
-            putRequestScope(AttributeConst.FOL_COUNT, followCount); //全ての従業員データの件数
+            putRequestScope(AttributeConst.FOLLOWEE, followee); //取得したフォロイーデータ
+            putRequestScope(AttributeConst.FOL_COUNT, myFollowsCount); //ログイン中の従業員ののフォロイーデータの件数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
             putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 

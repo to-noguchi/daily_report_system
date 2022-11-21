@@ -19,8 +19,8 @@ public class FollowConverter {
     public static Follow toModel(FollowView fv) {
         return new Follow(
                 fv.getId(),
-                EmployeeConverter.toModel(fv.getFollowerId()),
-                EmployeeConverter.toModel(fv.getFolloweeId()),
+                EmployeeConverter.toModel(fv.getFollower()),
+                EmployeeConverter.toModel(fv.getFollowee()),
                 fv.getCreatedAt());
 
     }
@@ -38,8 +38,8 @@ public class FollowConverter {
 
         return new FollowView(
                 f.getId(),
-                EmployeeConverter.toView(f.getFollowerId()),
-                EmployeeConverter.toView(f.getFolloweeId()),
+                EmployeeConverter.toView(f.getFollower()),
+                EmployeeConverter.toView(f.getFollowee()),
                 f.getCreatedAt());
     }
 
@@ -65,8 +65,8 @@ public class FollowConverter {
      */
     public static void copyViewToModel(Follow f, FollowView fv) {
         f.setId(fv.getId());
-        f.setFollowerId(EmployeeConverter.toModel(fv.getFollowerId()));
-        f.setFollowerId(EmployeeConverter.toModel(fv.getFolloweeId()));
+        f.setFollower(EmployeeConverter.toModel(fv.getFollower()));
+        f.setFollower(EmployeeConverter.toModel(fv.getFollowee()));
         f.setCreatedAt(fv.getCreatedAt());
 
     }

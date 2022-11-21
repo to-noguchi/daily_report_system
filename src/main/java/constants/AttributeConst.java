@@ -43,14 +43,9 @@ public enum AttributeConst {
 
 //★ここから追記
     //フォロー管理
-    FOL("follow"),
-    FOLS("follows"),
+    FOLLOWEE("followee"),
+    FOLLOWER("follower"),
     FOL_COUNT("follows_count"),
-    FOL_ID("id"),
-    FOL_WER_ID("follower_id"),
-    FOL_WEE_ID("followee_id"),
-
-    PERSONAL("personal"), //個人の日報一覧用
 //★ここまで追記
 
     //日報管理

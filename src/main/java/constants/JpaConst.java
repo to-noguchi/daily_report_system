@@ -93,6 +93,12 @@ public interface JpaConst {
     //フォローしている全ての従業員の件数を取得する
     String Q_FOL_COUNT = ENTITY_FOL + ".count";
     String Q_FOL_COUNT_DEF = "SELECT COUNT(f) FROM Follow AS f";
+    //フォローしている従業員が作成した日報を全件idの降順で取得する
+    String Q_FOL_GET_ALL_MINE = ENTITY_REP + ".getAllMine";
+    String Q_FOL_GET_ALL_MINE_DEF = "SELECT f FROM Follow AS f WHERE f.followee = :" + JPQL_PARM_FOLLOWEE + " ORDER BY f.id DESC";
+    //指定した従業員が作成した日報の件数を取得する
+    String Q_FOL_COUNT_ALL_MINE = ENTITY_FOL + ".countAllMine";
+    String Q_FOL_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.followee = :" + JPQL_PARM_FOLLOWEE;
     //社員番号とハッシュ化済パスワードを条件に未削除のフォローしている従業員を取得する
     String Q_FOL_GET_BY_CODE_AND_PASS = ENTITY_FOL + ".getByCodeAndPass";
     String Q_FOL_GET_BY_CODE_AND_PASS_DEF = "SELECT f FROM Follow AS f WHERE e.deleteFlag = 0 AND e.code = :" + JPQL_PARM_CODE + " AND e.password = :" + JPQL_PARM_PASSWORD;
