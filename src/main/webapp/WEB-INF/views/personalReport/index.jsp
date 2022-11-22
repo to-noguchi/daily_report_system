@@ -50,6 +50,12 @@
                 </c:choose>
             </c:forEach>
         </div>
+        <c:choose>
+            <c:when 「フォロー中ではない場合」という指定、フォロー切り替え機能<p>フォローする</p> >
+            </c:when>
+            <c:otherwise 「フォロー中の場合」という指定、フォロー切り替え機能<p>フォロー解除する</p>>
+            </c:otherwise>
+        </c:choose>
         <p><a href="<c:url value='?action=${actRep}&command=${commNew}' />">新規日報の登録</a></p>
 
     </c:param>

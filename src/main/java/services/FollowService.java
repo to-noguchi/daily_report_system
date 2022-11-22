@@ -3,6 +3,8 @@ package services;
 
 import java.util.List;
 
+import actions.views.EmployeeConverter;
+import actions.views.EmployeeView;
 import actions.views.FollowConverter;
 import actions.views.FollowView;
 import constants.JpaConst;
@@ -18,8 +20,9 @@ public class FollowService extends ServiceBase {
      * @param page ページ数
      * @return 表示するデータのリスト
      */
-    public List<FollowView> getPerPage(int page) {
+    public List<FollowView> getPerPage(EmployeeView follow,int page) {
         List<Follow> follows = em.createNamedQuery(JpaConst.Q_FOL_GET_ALL, Follow.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(follow))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
@@ -31,9 +34,9 @@ public class FollowService extends ServiceBase {
      * 指定した従業員がフォローしているフォロイーデータの件数を取得し、返却する
      * @return フォローテーブルのデータの件数
      */
-    public long countAllMine(FollowView follow) {
+    public long countAllMine(EmployeeView follow) {
         long folCount = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT_ALL_MINE, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, FollowConverter.toModel(follow))
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(follow))
                 .getSingleResult();
 
         return folCount;

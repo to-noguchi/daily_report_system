@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 
+import actions.views.EmployeeView;
 import actions.views.FollowView;
 import constants.AttributeConst;
 import constants.ForwardConst;
@@ -44,16 +45,16 @@ public class FollowAction extends ActionBase {
         if (checkAdmin()) { */
 
             //セッションからログイン中の従業員情報を取得
-            FollowView loginEmployee = (FollowView)getSessionScope(AttributeConst.LOGIN_EMP);
+            EmployeeView loginEmployee = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
 
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
-            List<FollowView> followee = service.getPerPage(page);
+            List<FollowView> follow = service.getPerPage(loginEmployee,page);
 
             //ログイン中の従業員のフォロイーデータの件数を取得
             long myFollowsCount = service.countAllMine(loginEmployee);
 
-            putRequestScope(AttributeConst.FOLLOWEE, followee); //取得したフォロイーデータ
+            putRequestScope(AttributeConst.FOLLOWEE, follow); //取得したフォロイーデータ
             putRequestScope(AttributeConst.FOL_COUNT, myFollowsCount); //ログイン中の従業員ののフォロイーデータの件数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
             putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
@@ -63,6 +64,8 @@ public class FollowAction extends ActionBase {
             if (flush != null) {
                 putRequestScope(AttributeConst.FLUSH, flush);
                 removeSessionScope(AttributeConst.FLUSH);
+
+
             }
 
             //一覧画面を表示
