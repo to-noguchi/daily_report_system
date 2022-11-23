@@ -45,8 +45,8 @@ public interface JpaConst {
     String TABLE_FOL = "follows"; //テーブル名
     //フォローテーブルカラム
     String FOL_COL_ID = "id"; //id
-    String FOL_COL_WER = "follower_id"; //フォローする従業員のid
-    String FOL_COL_WEE = "followee_id"; //フォロー先の従業員のid
+    String FOL_COL_WER = "follower"; //フォローする従業員
+    String FOL_COL_WEE = "followee"; //フォロー先の従業員
     String FOL_COL_CREATED_AT = "created_at";
 //★ここまで追記
 
@@ -59,6 +59,7 @@ public interface JpaConst {
     String JPQL_PARM_CODE = "code"; //社員番号
     String JPQL_PARM_PASSWORD = "password"; //パスワード
     String JPQL_PARM_EMPLOYEE = "employee"; //従業員
+    String JPQL_PARM_FOLLOWER = "follower";
     String JPQL_PARM_FOLLOWEE = "followee"; //フォロー先　★追記
 
     //NamedQueryの nameとquery
@@ -94,17 +95,10 @@ public interface JpaConst {
     String Q_FOL_COUNT = ENTITY_FOL + ".count";
     String Q_FOL_COUNT_DEF = "SELECT COUNT(f) FROM Follow AS f";
     //フォローしている従業員が作成した日報を全件idの降順で取得する
-    String Q_FOL_GET_ALL_MINE = ENTITY_REP + ".getAllMine";
+    String Q_FOL_GET_ALL_MINE = ENTITY_FOL + ".getAllMine";
     String Q_FOL_GET_ALL_MINE_DEF = "SELECT f FROM Follow AS f WHERE f.followee = :" + JPQL_PARM_FOLLOWEE + " ORDER BY f.id DESC";
-    //指定した従業員が作成した日報の件数を取得する
+    //フォローしている従業員が作成した日報の件数を取得する
     String Q_FOL_COUNT_ALL_MINE = ENTITY_FOL + ".countAllMine";
     String Q_FOL_COUNT_ALL_MINE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE f.followee = :" + JPQL_PARM_FOLLOWEE;
-    //社員番号とハッシュ化済パスワードを条件に未削除のフォローしている従業員を取得する
-    String Q_FOL_GET_BY_CODE_AND_PASS = ENTITY_FOL + ".getByCodeAndPass";
-    String Q_FOL_GET_BY_CODE_AND_PASS_DEF = "SELECT f FROM Follow AS f WHERE e.deleteFlag = 0 AND e.code = :" + JPQL_PARM_CODE + " AND e.password = :" + JPQL_PARM_PASSWORD;
-    //指定した社員番号を保持するフォローしている従業員の件数を取得する
-    String Q_FOL_COUNT_REGISTERED_BY_CODE = ENTITY_FOL + ".countRegisteredByCode";
-    String Q_FOL_COUNT_REGISTERED_BY_CODE_DEF = "SELECT COUNT(f) FROM Follow AS f WHERE e.code = :" + JPQL_PARM_CODE;
-
 //★ここまで追記
 }

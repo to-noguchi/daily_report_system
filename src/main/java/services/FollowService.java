@@ -16,13 +16,13 @@ import models.Follow;
 public class FollowService extends ServiceBase {
 
     /**
-     * 指定されたページ数の一覧画面に表示するデータを取得し、FollowViewのリストで返却する
+     * 指定されたページ数の一覧画面に表示するデータ（指定した従業員がフォローしているフォロイーのデータ）を取得し、FollowViewのリストで返却する
      * @param page ページ数
      * @return 表示するデータのリスト
      */
-    public List<FollowView> getPerPage(EmployeeView follow,int page) {
+    public List<FollowView> getPerPage(EmployeeView follower,int page) {
         List<Follow> follows = em.createNamedQuery(JpaConst.Q_FOL_GET_ALL, Follow.class)
-                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(follow))
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWER, EmployeeConverter.toModel(follower))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
@@ -34,9 +34,9 @@ public class FollowService extends ServiceBase {
      * 指定した従業員がフォローしているフォロイーデータの件数を取得し、返却する
      * @return フォローテーブルのデータの件数
      */
-    public long countAllMine(EmployeeView follow) {
-        long folCount = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT_ALL_MINE, Long.class)
-                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(follow))
+    public long countAllMine(EmployeeView followee) {
+        long folCount = (long) em.createNamedQuery(JpaConst.Q_FOL_COUNT, Long.class)
+                .setParameter(JpaConst.JPQL_PARM_FOLLOWEE, EmployeeConverter.toModel(followee))
                 .getSingleResult();
 
         return folCount;

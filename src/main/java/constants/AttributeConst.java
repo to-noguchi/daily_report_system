@@ -47,7 +47,7 @@ public enum AttributeConst {
     FOLLOWER("follower"),
     FOL_COUNT("follows_count"),
 
-    PERSONAL_EMPLOYEE("personal_employee"),
+    PER_EMP_ID("personal_employee_id"),
 //★ここまで追記
 
     //日報管理
