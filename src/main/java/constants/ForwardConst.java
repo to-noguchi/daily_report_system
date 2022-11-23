@@ -43,7 +43,7 @@ public enum ForwardConst {
     FW_REP_EDIT("reports/edit"),
     FW_FOL_INDEX("follows/index"),//★追記
 
-    PERSONAL_REP_INDEX("personal_report/index");//★追記;
+    FW_PERREP_INDEX("personal_report/index");//★追記;
 
     /**
      * 文字列
