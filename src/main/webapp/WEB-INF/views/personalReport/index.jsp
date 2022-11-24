@@ -15,7 +15,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2><c:out value="${sessionScope.employee.name}" />さんの日報　一覧</h2>
+        <h2><c:out value="${sessionScope.personal_employee.name}" />さんの日報　一覧</h2>
         <table id="personalReport_list">
             <tbody>
                 <tr>

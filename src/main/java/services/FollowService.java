@@ -21,13 +21,13 @@ public class FollowService extends ServiceBase {
      * @return 表示するデータのリスト
      */
     public List<FollowView> getPerPage(EmployeeView follower,int page) {
-        List<Follow> follows = em.createNamedQuery(JpaConst.Q_FOL_GET_ALL, Follow.class)
+        List<Follow> followee = em.createNamedQuery(JpaConst.Q_FOL_GET_ALL_MINE, Follow.class)
                 .setParameter(JpaConst.JPQL_PARM_FOLLOWER, EmployeeConverter.toModel(follower))
                 .setFirstResult(JpaConst.ROW_PER_PAGE * (page - 1))
                 .setMaxResults(JpaConst.ROW_PER_PAGE)
                 .getResultList();
 
-        return FollowConverter.toViewList(follows);
+        return FollowConverter.toViewList(followee);
     }
 
     /**

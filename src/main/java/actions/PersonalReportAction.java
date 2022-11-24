@@ -41,7 +41,7 @@ public class PersonalReportAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
         //セッションから指定の従業員情報を取得
-        EmployeeView employee = (EmployeeView) getSessionScope(AttributeConst.PER_EMP_ID);
+        EmployeeView employee = (EmployeeView) getSessionScope(AttributeConst.PER_EMP);
 
         //指定の従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
         int page = getPage();
