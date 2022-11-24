@@ -46,8 +46,8 @@ public interface JpaConst {
     String TABLE_FOL = "follows"; //テーブル名
     //フォローテーブルカラム
     String FOL_COL_ID = "id"; //id
-    String FOL_COL_WER = "follower"; //フォローする従業員
-    String FOL_COL_WEE = "followee"; //フォロー先の従業員
+    String FOL_COL_WER = "follower_id"; //フォローする従業員
+    String FOL_COL_WEE = "followee_id"; //フォロー先の従業員
     String FOL_COL_CREATED_AT = "created_at";
 //★ここまで追記
 
