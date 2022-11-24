@@ -47,7 +47,6 @@ public enum AttributeConst {
     FOLLOWER("follower"),
     FOL_COUNT("follows_count"),
 
-    PER_EMP("personal_employee"),
 //★ここまで追記
 
     //日報管理
@@ -57,7 +56,11 @@ public enum AttributeConst {
     REP_ID("id"),
     REP_DATE("report_date"),
     REP_TITLE("title"),
-    REP_CONTENT("content_msg");
+    REP_CONTENT("content_msg"),
+
+    PER_EMP("personal_employee"),//追記
+    PER_REP("personal_report"),//追記
+    REP_EMP_ID("employee_id");//追記
 
     private final String text;
     private final Integer i;

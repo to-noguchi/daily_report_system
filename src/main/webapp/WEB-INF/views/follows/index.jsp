@@ -23,7 +23,7 @@
                     <th>氏名</th>
                     <th>操作</th>
                 </tr>
-                <c:forEach var="follow" items="${follows}" varStatus="status">
+                <c:forEach var="followee" items="${followee}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${follow.followee.name}" /></td>
                         <td>

@@ -40,27 +40,20 @@ public class PersonalReportAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        //セッションから指定の従業員情報を取得
-        EmployeeView employee = (EmployeeView) getSessionScope(AttributeConst.PER_EMP);
+        //idを条件に従業員データを取得する
+        EmployeeView personalEmployee = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
         //指定の従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
         int page = getPage();
-        List<ReportView> reports = service.getMinePerPage(employee, page);
+        List<ReportView> personalReports = service.getMinePerPage(personalEmployee, page);
 
         //指定の従業員が作成した日報データの件数を取得
-        long reportsCount = service.countAllMine(employee);
+        long reportsCount = service.countAllMine(personalEmployee);
 
-        putRequestScope(AttributeConst.REPORTS, reports); //取得した日報データ
+        putRequestScope(AttributeConst.REPORTS, personalReports); //取得した日報データ
         putRequestScope(AttributeConst.REP_COUNT, reportsCount); //指定の従業員が作成した日報の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
-
-        //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
-        String flush = getSessionScope(AttributeConst.FLUSH);
-        if (flush != null) {
-            putRequestScope(AttributeConst.FLUSH, flush);
-            removeSessionScope(AttributeConst.FLUSH);
-        }
 
         //一覧画面を表示
         forward(ForwardConst.FW_PERREP_INDEX);
