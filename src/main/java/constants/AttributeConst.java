@@ -43,8 +43,8 @@ public enum AttributeConst {
 
 //★ここから追記
     //フォロー管理
-    FOLLOWEE("followee"),
     FOLLOWER("follower"),
+    FOLLOWEE("followee"),
     FOL_COUNT("follows_count"),
 
 //★ここまで追記

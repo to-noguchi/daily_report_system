@@ -4,6 +4,8 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actFol" value="${ForwardConst.ACT_FOL.getValue()}" />
+<c:set var="actPerRep" value="${ForwardConst. ACT_PERREP.getValue()}" />
+
 
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -23,7 +25,7 @@
                     <th>氏名</th>
                     <th>操作</th>
                 </tr>
-                <c:forEach var="followee" items="${followee}" varStatus="status">
+                <c:forEach var="follow" items="${follows}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${follow.followee.name}" /></td>
                         <td>
@@ -32,7 +34,7 @@
                                     （削除済み）
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value='?action=${actFol}&command=${commIdx}&id=${follow.followee.id}' />">日報一覧を見る</a>
+                                    <a href="<c:url value='?action=${actPerRep}&command=${commIdx}&id=${employee.id}' />">日報一覧を見る</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>

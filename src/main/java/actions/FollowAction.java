@@ -10,6 +10,7 @@ import actions.views.FollowView;
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
+import constants.MessageConst;
 import services.FollowService;
 
 /**
@@ -41,20 +42,17 @@ public class FollowAction extends ActionBase {
      */
     public void index() throws ServletException, IOException {
 
-        /*管理者かどうかのチェック
-        if (checkAdmin()) { */
-
             //セッションからログイン中の従業員情報を取得
             EmployeeView loginEmployee = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
 
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
-            List<FollowView> followee = service.getPerPage(loginEmployee,page);
+            List<FollowView> follows = service.getPerPage(loginEmployee,page);
 
             //ログイン中の従業員のフォロイーデータの件数を取得
             long follows_count = service.countAllMine(loginEmployee);
 
-            putRequestScope(AttributeConst.FOLLOWEE, followee); //取得したフォロイーデータ
+            putRequestScope(AttributeConst.FOLLOWEE, follows); //取得したフォロイーデータ
             putRequestScope(AttributeConst.FOL_COUNT, follows_count); //ログイン中の従業員のフォロイーデータの件数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
             putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
@@ -73,4 +71,37 @@ public class FollowAction extends ActionBase {
 
         } //追記
 
+    /**
+     * フォローの新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void create() throws ServletException, IOException {
+
+            //フォロー情報のインスタンスを作成する
+            FollowView fv = new FollowView();
+
+            //フォロー情報登録
+            fv = service.create(fv);
+
+                //セッションに登録完了のフラッシュメッセージを設定
+                putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
+
+                //一覧画面にリダイレクト
+                redirect(ForwardConst.FW_PERREP_INDEX, ForwardConst.CMD_INDEX);
+            }
+
+/**
+ * 物理削除を行う
+ * @throws ServletException
+ * @throws IOException
+ */
+public void destroy() throws ServletException, IOException {
+
+        //idを条件にフォローデータを物理削除する
+        service.destroy(toNumber(getRequestParam(AttributeConst.FOLLOWEE)));
+
+        //一覧画面にリダイレクト
+        redirect(ForwardConst.FW_PERREP_INDEX, ForwardConst.CMD_INDEX);
     }
+}

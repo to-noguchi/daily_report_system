@@ -42,7 +42,7 @@ public class PersonalReportAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
         //idを条件に従業員データを取得する
-        EmployeeView personalEmployee = EmployeeService.findPerEmp(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+        EmployeeView personalEmployee = EmployeeService.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
         //指定の従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
         int page = getPage();

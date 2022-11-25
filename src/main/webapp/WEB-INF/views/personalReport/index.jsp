@@ -4,6 +4,8 @@
 <%@ page import="constants.ForwardConst" %>
 
 <c:set var="actRep" value="${ForwardConst.ACT_REP.getValue()}" />
+<c:set var="actFol" value="${ForwardConst.ACT_FOL.getValue()}" />
+
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
@@ -15,8 +17,8 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2><c:out value="${sessionScope.personal_employee.name}" />さんの日報　一覧</h2>
-        <table id="personalReport_list">
+        <h2>日報　一覧</h2>
+        <table id="report_list">
             <tbody>
                 <tr>
                     <th class="report_name">氏名</th>
@@ -24,7 +26,7 @@
                     <th class="report_title">タイトル</th>
                     <th class="report_action">操作</th>
                 </tr>
-                <c:forEach var="Reports" items="${personalReports}" varStatus="status">
+                <c:forEach var="report" items="${reports}" varStatus="status">
                     <fmt:parseDate value="${report.reportDate}" pattern="yyyy-MM-dd" var="reportDay" type="date" />
 
                     <tr class="row${status.count % 2}">
@@ -50,12 +52,7 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <c:choose>
-            <c:when 「フォロー中ではない場合」という指定<p>フォローする</p> >
-            </c:when>
-            <c:otherwise 「フォロー中の場合」という指定<p>フォロー解除する</p>>
-            </c:otherwise>
-        </c:choose>
+        <c:out value="${ActFol}"><p>フォローする</p></c:out>
 
     </c:param>
 </c:import>
