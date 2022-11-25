@@ -79,6 +79,11 @@ public class EmployeeService extends ServiceBase {
         return EmployeeConverter.toView(e);
     }
 
+    public static EmployeeView findPerEmp(int id) {
+        Employee e = findPerEmpInternal(id);
+        return EmployeeConverter.toView(e);
+    }
+
     /**
      * 社員番号を条件に該当するデータの件数を取得し、返却する
      * @param code 社員番号
@@ -225,6 +230,12 @@ public class EmployeeService extends ServiceBase {
      * @return 取得データのインスタンス
      */
     private Employee findOneInternal(int id) {
+        Employee e = em.find(Employee.class, id);
+
+        return e;
+    }
+
+    private static Employee findPerEmpInternal(int id) {
         Employee e = em.find(Employee.class, id);
 
         return e;

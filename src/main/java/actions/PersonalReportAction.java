@@ -10,6 +10,7 @@ import actions.views.ReportView; //追記
 import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;  //追記
+import services.EmployeeService;  //追記
 import services.ReportService;  //追記
 
 /**
@@ -41,7 +42,7 @@ public class PersonalReportAction extends ActionBase {
     public void index() throws ServletException, IOException {
 
         //idを条件に従業員データを取得する
-        EmployeeView personalEmployee = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+        EmployeeView personalEmployee = EmployeeService.findPerEmp(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
         //指定の従業員が作成した日報データを、指定されたページ数の一覧画面に表示する分取得する
         int page = getPage();
