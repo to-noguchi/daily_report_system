@@ -34,7 +34,7 @@
                                     （削除済み）
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="<c:url value='?action=${actPerRep}&command=${commIdx}&id=${employee.id}' />">日報一覧を見る</a>
+                                    <a href="<c:url value='?action=${actPerRep}&command=${commIdx}&id=${follow.followee.id}' />">日報一覧を見る</a>
                                 </c:otherwise>
                             </c:choose>
                         </td>

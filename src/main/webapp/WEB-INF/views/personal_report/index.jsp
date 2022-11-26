@@ -17,7 +17,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>日報　一覧</h2>
+        <h2>${report.employee.name} さんの日報　一覧</h2>
         <table id="report_list">
             <tbody>
                 <tr>
@@ -52,7 +52,15 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <c:out value="${ActFol}"><p>フォローする</p></c:out>
+
+        <p>
+            <a href="">フォローする</a>
+        </p>
+        <form method="POST"
+            action="<c:url value='?action=${actFol.create()}&command=${commNew}' />">
+            <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}" />
+            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
+        </form>
 
     </c:param>
 </c:import>

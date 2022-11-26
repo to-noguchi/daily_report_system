@@ -11,6 +11,7 @@ import constants.AttributeConst;
 import constants.ForwardConst;
 import constants.JpaConst;
 import constants.MessageConst;
+import services.EmployeeService;
 import services.FollowService;
 
 /**
@@ -19,7 +20,9 @@ import services.FollowService;
  */
 public class FollowAction extends ActionBase {
 
-    private FollowService service;
+    private FollowService fs;
+    private EmployeeService es;
+
 
     /**
      * メソッドを実行する
@@ -27,12 +30,14 @@ public class FollowAction extends ActionBase {
     @Override
     public void process() throws ServletException, IOException {
 
-        service = new FollowService();
+        fs = new FollowService();
+        es = new EmployeeService();
 
         //メソッドを実行
         invoke();
 
-        service.close();
+        fs.close();
+        es.close();
     }
 
     /**
@@ -47,12 +52,12 @@ public class FollowAction extends ActionBase {
 
             //指定されたページ数の一覧画面に表示するデータを取得
             int page = getPage();
-            List<FollowView> follows = service.getPerPage(loginEmployee,page);
+            List<FollowView> follows = fs.getPerPage(loginEmployee,page);
 
             //ログイン中の従業員のフォロイーデータの件数を取得
-            long follows_count = service.countAllMine(loginEmployee);
+            long follows_count = fs.countAllMine(loginEmployee);
 
-            putRequestScope(AttributeConst.FOLLOWEE, follows); //取得したフォロイーデータ
+            putRequestScope(AttributeConst.FOLLOWS, follows); //取得したフォロイーデータ
             putRequestScope(AttributeConst.FOL_COUNT, follows_count); //ログイン中の従業員のフォロイーデータの件数
             putRequestScope(AttributeConst.PAGE, page); //ページ数
             putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
@@ -78,11 +83,20 @@ public class FollowAction extends ActionBase {
      */
     public void create() throws ServletException, IOException {
 
+        //セッションからログイン中の従業員情報を取得
+        EmployeeView loginEmployee = (EmployeeView)getSessionScope(AttributeConst.LOGIN_EMP);
+
+        //idを条件に従業員データを取得する
+        EmployeeView personalEmployee = es.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
+
+        putRequestScope(AttributeConst.FOLLOWER, loginEmployee); //取得したフォロワーデータ
+        putRequestScope(AttributeConst.FOLLOWEE, personalEmployee); //取得したフォロイーデータ
+
             //フォロー情報のインスタンスを作成する
             FollowView fv = new FollowView();
 
             //フォロー情報登録
-            fv = service.create(fv);
+            fv = fs.create(fv);
 
                 //セッションに登録完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
@@ -99,7 +113,7 @@ public class FollowAction extends ActionBase {
 public void destroy() throws ServletException, IOException {
 
         //idを条件にフォローデータを物理削除する
-        service.destroy(toNumber(getRequestParam(AttributeConst.FOLLOWEE)));
+        fs.destroy(toNumber(getRequestParam(AttributeConst.FOLLOWEE)));
 
         //一覧画面にリダイレクト
         redirect(ForwardConst.FW_PERREP_INDEX, ForwardConst.CMD_INDEX);
