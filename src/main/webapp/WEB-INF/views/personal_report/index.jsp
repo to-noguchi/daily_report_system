@@ -57,20 +57,16 @@
 
             <c:choose>
                 <c:when test="${follow == null }">
-                    <p>
                     <form method=POST action="<c:url value='?action=${actFol}&command=${commCrt}'/>">
                     <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}"/>
                     <button type="submit">フォローする</button>
                     </form>
-                    </p>
                 </c:when>
                 <c:when test="${follow != null }">
-                    <p>
                     <form method=POST action="<c:url value='?action=${actFol}&command=${commDel}'/>">
                     <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}"/>
                     <button type="submit">フォロー解除</button>
                     </form>
-                    </p>
                 </c:when>
             </c:choose>
 
