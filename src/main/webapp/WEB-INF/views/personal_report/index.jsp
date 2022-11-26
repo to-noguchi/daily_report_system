@@ -9,6 +9,8 @@
 <c:set var="commIdx" value="${ForwardConst.CMD_INDEX.getValue()}" />
 <c:set var="commShow" value="${ForwardConst.CMD_SHOW.getValue()}" />
 <c:set var="commNew" value="${ForwardConst.CMD_NEW.getValue()}" />
+<c:set var="commCrt" value="${ForwardConst.CMD_CREATE.getValue()}" />
+<c:set var="commDel" value="${ForwardConst.CMD_DELETE.getValue()}" />
 
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
@@ -17,7 +19,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>${report.employee.name} さんの日報　一覧</h2>
+        <h2>個人日報　一覧</h2>
         <table id="report_list">
             <tbody>
                 <tr>
@@ -53,14 +55,24 @@
             </c:forEach>
         </div>
 
-        <p>
-            <a href="">フォローする</a>
-        </p>
-        <form method="POST"
-            action="<c:url value='?action=${actFol}&command=${commNew}' />">
-            <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}" />
-            <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
-        </form>
+            <c:choose>
+                <c:when test="${follow == null }">
+                    <p>
+                    <form method=POST action="<c:url value='?action=${actFol}&command=${commCrt}'/>">
+                    <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}"/>
+                    <button type="submit">フォローする</button>
+                    </form>
+                    </p>
+                </c:when>
+                <c:when test="${follow != null }">
+                    <p>
+                    <form method=POST action="<c:url value='?action=${actFol}&command=${commDel}'/>">
+                    <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}"/>
+                    <button type="submit">フォロー解除</button>
+                    </form>
+                    </p>
+                </c:when>
+            </c:choose>
 
     </c:param>
 </c:import>

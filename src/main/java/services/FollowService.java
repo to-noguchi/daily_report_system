@@ -57,13 +57,13 @@ public class FollowService extends ServiceBase {
      * idを条件にフォローデータを物理削除する
      * @param id
      */
-    public void destroy(Integer id) {
+    public void delete(Integer id) {
 
         //idを条件にフォロー情報を取得する
         FollowView savedFol = findOne(id);
 
         //削除処理を行う
-        destroy(savedFol);
+        delete(savedFol);
 
     }
 
@@ -85,14 +85,6 @@ public class FollowService extends ServiceBase {
      */
     public FollowView create(FollowView fv) {
 
-        FollowView fv = new FollowView();
-
-        EmployeeView follower = (EmployeeView)follower;
-        fv.setFollower(follower);
-
-        EmployeeView followee = (EmployeeView)followee;
-        fv.setFollowee(followee);
-
         //登録日時は現在時刻を設定する
         LocalDateTime now = LocalDateTime.now();
         fv.setCreatedAt(now);
@@ -108,7 +100,7 @@ public class FollowService extends ServiceBase {
      * フォローデータを削除する
      * @param fv フォローの登録内容
      */
-    private void destroy(FollowView fv) {
+    private void delete(FollowView fv) {
 
         em.getTransaction().begin();
         Follow f = findOneInternal(fv.getId());

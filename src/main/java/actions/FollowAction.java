@@ -89,11 +89,10 @@ public class FollowAction extends ActionBase {
         //idを条件に従業員データを取得する
         EmployeeView personalEmployee = es.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
-        putRequestScope(AttributeConst.FOLLOWER, loginEmployee); //取得したフォロワーデータ
-        putRequestScope(AttributeConst.FOLLOWEE, personalEmployee); //取得したフォロイーデータ
-
-            //フォロー情報のインスタンスを作成する
-            FollowView fv = new FollowView();
+        //フォロー情報のインスタンスを作成する
+        FollowView fv = new FollowView();
+        fv.setFollowee(personalEmployee);
+        fv.setFollower(loginEmployee);
 
             //フォロー情報登録
             fv = fs.create(fv);
@@ -102,7 +101,7 @@ public class FollowAction extends ActionBase {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.FW_PERREP_INDEX, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.FW_FOL_INDEX, ForwardConst.CMD_INDEX);
             }
 
 /**
@@ -110,12 +109,12 @@ public class FollowAction extends ActionBase {
  * @throws ServletException
  * @throws IOException
  */
-public void destroy() throws ServletException, IOException {
+public void delete() throws ServletException, IOException {
 
         //idを条件にフォローデータを物理削除する
-        fs.destroy(toNumber(getRequestParam(AttributeConst.FOLLOWEE)));
+        fs.delete(toNumber(getRequestParam(AttributeConst.FOLLOWEE)));
 
         //一覧画面にリダイレクト
-        redirect(ForwardConst.FW_PERREP_INDEX, ForwardConst.CMD_INDEX);
+        redirect(ForwardConst.FW_FOL_INDEX, ForwardConst.CMD_INDEX);
     }
 }
