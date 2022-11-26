@@ -85,6 +85,8 @@ public class FollowService extends ServiceBase {
      */
     public FollowView create(FollowView fv) {
 
+        FollowView fv = new FollowView();
+
         EmployeeView follower = (EmployeeView)follower;
         fv.setFollower(follower);
 

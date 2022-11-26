@@ -57,7 +57,7 @@
             <a href="">フォローする</a>
         </p>
         <form method="POST"
-            action="<c:url value='?action=${actFol.create()}&command=${commNew}' />">
+            action="<c:url value='?action=${actFol}&command=${commNew}' />">
             <input type="hidden" name="${AttributeConst.EMP_ID.getValue()}" value="${employee.id}" />
             <input type="hidden" name="${AttributeConst.TOKEN.getValue()}" value="${_token}" />
         </form>
