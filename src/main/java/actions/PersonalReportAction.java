@@ -55,6 +55,7 @@ public class PersonalReportAction extends ActionBase {
         long reportsCount = rs.countAllMine(personalEmployee);
 
         putRequestScope(AttributeConst.REPORTS, personalReports); //取得した日報データ
+        putRequestScope(AttributeConst.EMPLOYEE, personalEmployee);//従業員データをリクエストスコープに保存する
         putRequestScope(AttributeConst.REP_COUNT, reportsCount); //指定の従業員が作成した日報の数
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数

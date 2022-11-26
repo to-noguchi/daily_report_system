@@ -101,7 +101,7 @@ public class FollowAction extends ActionBase {
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_REGISTERED.getMessage());
 
                 //一覧画面にリダイレクト
-                redirect(ForwardConst.FW_FOL_INDEX, ForwardConst.CMD_INDEX);
+                redirect(ForwardConst.ACT_FOL, ForwardConst.CMD_INDEX);
             }
 
 /**
